@@ -159,3 +159,120 @@ fiber这里还继续往下写吗？ 张佬
 
 下次课是下周三晚上8点开始
 
+
+
+20:10
+奈斯啊小刘超奈斯
+fiberRootNode --->  只能是根元素#root么 是的
+shine
+对RootNode  就是 #root 
+丁浩宇
+fiber的作用是什么 
+
+以前讲的是17
+先有虚拟DOM=生成真实DOM
+此生成过程是一气呵成，中间不能不断,如果工作过长可能会引起卡顿
+有了fiber以后
+虚拟DOM=>fiber=>生成真实DOM
+fiber是一个链表，可以很方便的中断和重启
+shine
+拆分 任务。 
+
+
+
+帅汤汤
+应该是16之前吧 
+shine
+就是15 
+冰可乐加冰
+jsxdev生成虚拟dom只是vite调用的吗 
+不是的，所有都会调
+奈斯啊小刘超奈斯
+跟vite没关系 
+奋斗ing
+https://claudiopro.github.io/react-fiber-vs-stack-demo/ 
+奋斗ing
+对比 
+彭时宇
+以前是直接递归渲染 
+
+
+
+
+performUnitOfWork作用就是执行当前fiber,并返回下一个fiber? 
+执行一个工作单元
+beginWork是是执行当前fiber,并返回下一个fiber?
+
+
+wind-zhou
+怎么标识的B1 完成 
+有两种情况完成一个fiber
+1. 没有child,没有大儿子
+2. 所有的儿子已经处理完了，父fiber也会完成
+
+怎么完成的？回到父亲不会死循环吗 
+回到父fiber之后，不会执行父fiber,而是会执行父fiber的弟弟
+彭时宇
+这就是深度优先 
+奈斯啊小刘超奈斯
+是的 深度优先 
+sunShine
+执行了completeUnitOfWork就是结束了 
+
+
+
+哪里判断的都完成了 如果下一个fiber是null就全结束了
+怪人。
+儿子完了没弟弟了 
+彭时宇
+fiber.return为空也就完成了 
+丁浩宇
+fiber= fiber.return就说明完成饿了 
+fiber为空 
+
+
+bu
+在更新过程中，其他高优先级的任务指什么？ 
+并发渲染和优先级放在最后讲
+
+桑祈
+为什么是深度优先  不是广度优先 
+
+
+1.虚拟DOM渲染
+2.函数组件
+3.useReducer useState
+4.DOM-DIFF
+5.任务调度
+6.优先级lane和并发渲染
+
+
+
+中途停止了，怎么可以接着在断开点开始渲染 
+每次渲染以后都会记录下一个fiber
+nextUnitOfWork
+
+怪人。
+while循环 
+彭时宇
+循环可以中断 
+shine
+
+yjg
+有一个变量记录节点，下次就会从该变量的节点开始渲染  nextUnitOfWork
+bu
+前中后序遍历都是深度优先吗？ 
+
+
+丁浩宇
+什么事前序中续 
+这是二叉树的遍历中的概念，指的是根节点是先遍历，还是中间遍历，还是最后遍历
+
+孙景峰
+横着来广，竖着来深 
+shine
+前 根左右  中 左根右  后  左右根 
+奈斯啊小刘超奈斯
+但是A1不是后完成的么 
+赵正阳
+Fiber非常像是二叉树后序遍历 
