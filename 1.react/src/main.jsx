@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-debugger
 let element = (
   <h1>
     hello<span style={{ color: "red" }}>world</span>
