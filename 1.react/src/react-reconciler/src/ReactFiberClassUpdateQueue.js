@@ -56,7 +56,6 @@ export function processUpdateQueue(workInProgress) {
       newState = getStateFromUpdate(update, newState);
       update = update.next;
     }
-    console.log("newState", newState); //payload {element:h1}
     //把最终计算到的状态赋值给memoizedState
     workInProgress.memoizedState = newState;
   }

@@ -1,4 +1,4 @@
-import { HostComponent, HostRoot, IndeterminateComponent } from "./ReactWorkTags";
+import { HostComponent, HostRoot, IndeterminateComponent, HostText } from "./ReactWorkTags";
 import { NoFlags } from "./ReactFiberFlags";
 /**
  *
@@ -32,6 +32,7 @@ export function FiberNode(tag, pendingProps, key) {
   this.subtreeFlags = NoFlags;
   //替身，轮替 在后面讲DOM-DIFF的时候会用到
   this.alternate = null;
+  this.index = 0;
 }
 // We use a double buffering pooling technique because we know that we'll only ever need at most two versions of a tree.
 // We pool the "other" unused  node that we're free to reuse.
@@ -77,7 +78,7 @@ export function createWorkInProgress(current, pendingProps) {
  * @param {*} element
  */
 export function createFiberFromElement(element) {
-  const { type, key, pendingProps } = element;
+  const { type, key, props: pendingProps } = element;
   return createFiberFromTypeAndProps(type, key, pendingProps);
 }
 
@@ -90,4 +91,8 @@ function createFiberFromTypeAndProps(type, key, pendingProps) {
   const fiber = createFiber(tag, pendingProps, key);
   fiber.type = type;
   return fiber;
+}
+
+export function createFiberFromText(content) {
+  return createFiber(HostText, content, null);
 }
