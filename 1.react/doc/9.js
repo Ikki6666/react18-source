@@ -18,7 +18,6 @@ let nextUnitOfWork = null;
 const hasTimeRemaining = () => Math.floor(Math.random() * 10) % 2 == 0;
 //render工作循环
 function workLoop() {
-  debugger
   //工作循环每一次处理一个fiber,处理完以后可以暂停
   //如果有下一个任务并且有剩余的时间的话，执行下一个工作单元，也就是一个fiber
   while (nextUnitOfWork && hasTimeRemaining()) {
