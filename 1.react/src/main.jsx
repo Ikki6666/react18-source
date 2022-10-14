@@ -1,14 +1,17 @@
 import { createRoot } from "react-dom/client";
 let element = (
-  <div>
+  <h1 id="container">
+    hello<span style={{ color: "red" }}>world</span>
+  </h1>
+);
+
+/* function Counter() {
+  return (
     <h1>
       hello<span style={{ color: "red" }}>world</span>
     </h1>
-    <h2>
-      hello2<span style={{ color: "green" }}>world2</span>
-    </h2>
-  </div>
-);
+  )
+} */
 const root = createRoot(document.getElementById("root"));
 //把element虚拟DOM渲染到容器中
 root.render(element);

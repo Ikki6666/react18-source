@@ -6,6 +6,7 @@ function ReactDOMRoot(internalRoot) {
   this._internalRoot = internalRoot;
 }
 ReactDOMRoot.prototype.render = function (children) {
+  debugger
   const root = this._internalRoot;
   updateContainer(children, root);
 }
