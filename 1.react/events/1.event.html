@@ -36,11 +36,13 @@
   child.onxxClick = childBubble;
   child.onxxClickCapture = childCapture;
   //模拟React中的事件委托 
-  root.addEventListener('click', (event) => dispatchEvent(event, true), true);
-  root.addEventListener('click', (event) => dispatchEvent(event, false), false);
-  function dispatchEvent(event, isCapture) {
+  // 老师，问一下，这个函数绑定了两次，但实际点击的时候，只调用了一次是吗 
+  root.addEventListener('click', dispatchEvent.bind(null, true), true);
+  root.addEventListener('click', dispatchEvent.bind(null, false), false);
+  function dispatchEvent(isCapture, nativeEvent) {
+    console.log('dispatchEvent', isCapture ? '捕获' : '冒泡');
     let paths = [];//child parent div#root
-    let currentTarget = event.target;
+    let currentTarget = nativeEvent.target;
     while (currentTarget) {
       paths.push(currentTarget);
       currentTarget = currentTarget.parentNode;
