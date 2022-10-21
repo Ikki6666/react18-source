@@ -7,8 +7,16 @@ export function shouldSetTextContent(type, props) {
 export function createTextInstance(content) {
   return document.createTextNode(content);
 }
+/**
+ * 在原生组件初次挂载的时候，会通过此方法创建真实DOM
+ * @param {*} type 类型 span
+ * @param {*} props 属性
+ * @param {*} internalInstanceHandle 它对应的fiber
+ * @returns 
+ */
 export function createInstance(type, props, internalInstanceHandle) {
   const domElement = document.createElement(type);
+  //预先缓存fiber节点到DOM元素上
   precacheFiberNode(internalInstanceHandle, domElement);
   //把属性直接保存在domElement的属性上
   updateFiberProps(domElement, props);

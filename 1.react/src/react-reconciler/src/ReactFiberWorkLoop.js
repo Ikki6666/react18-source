@@ -46,7 +46,6 @@ function commitRoot(root) {
 }
 function prepareFreshStack(root) {
   workInProgress = createWorkInProgress(root.current, null);
-  console.log(workInProgress);
 }
 function renderRootSync(root) {
   //开始构建fiber树
@@ -104,7 +103,7 @@ function printFinishedWork(fiber) {
     child = child.sibling;
   }
   if (fiber.flags !== 0) {
-    console.log(getFlags(fiber.flags), getTag(fiber.tag), fiber.type, fiber.memoizedProps);
+    console.log(getFlags(fiber.flags), getTag(fiber.tag), fiber.type.name, fiber.memoizedProps);
   }
 }
 function getFlags(flags) {

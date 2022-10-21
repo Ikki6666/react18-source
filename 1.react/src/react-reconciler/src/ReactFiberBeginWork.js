@@ -71,7 +71,7 @@ export function mountIndeterminateComponent(current, workInProgress, Component) 
  * @returns
  */
 export function beginWork(current, workInProgress) {
-  logger(" ".repeat(indent.number) + "beginWork", workInProgress);
+  // logger(" ".repeat(indent.number) + "beginWork", workInProgress);
   indent.number += 2;
   switch (workInProgress.tag) {
     // 因为在React里组件其实有两种，一种是函数组件，一种是类组件，但是它们都是都是函数
