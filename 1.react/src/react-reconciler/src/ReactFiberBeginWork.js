@@ -76,7 +76,6 @@ export function beginWork(current, workInProgress) {
   switch (workInProgress.tag) {
     // 因为在React里组件其实有两种，一种是函数组件，一种是类组件，但是它们都是都是函数
     case IndeterminateComponent:
-      debugger
       return mountIndeterminateComponent(current, workInProgress, workInProgress.type);
     case HostRoot:
       return updateHostRoot(current, workInProgress);
