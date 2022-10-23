@@ -5,9 +5,14 @@ function counter(state, action) {
   return state;
 }
 function FunctionComponent() {
-  debugger
   const [number, setNumber] = React.useReducer(counter, 0);
-  return <button onClick={() => {
+  let attrs = { id: 'btn1' }
+  if (number === 6) {
+    delete attrs.id;
+    attrs.style = { color: 'red' };
+  }
+  return <button {...attrs} onClick={() => {
+    debugger
     setNumber({ type: 'add', payload: 1 });//update1=>update2=>update3=>update1
     setNumber({ type: 'add', payload: 2 });//update2
     setNumber({ type: 'add', payload: 3 });//update3 

@@ -3,10 +3,11 @@ import {
   createTextInstance,
   createInstance,
   appendInitialChild,
-  finalizeInitialChildren
+  finalizeInitialChildren,
+  prepareUpdate
 } from 'react-dom-bindings/src/client/ReactDOMHostConfig';
 import { NoFlags, Update } from "./ReactFiberFlags";
-import { HostComponent, HostRoot, HostText } from "./ReactWorkTags";
+import { HostComponent, HostRoot, HostText, FunctionComponent } from "./ReactWorkTags";
 /**
  * 把当前的完成的fiber所有的子节点对应的真实DOM都挂载到自己父parent真实DOM节点上
  * @param {*} parent 当前完成的fiber真实的DOM节点
@@ -50,12 +51,11 @@ function markUpdate(workInProgress) {
 function updateHostComponent(current, workInProgress, type, newProps) {
   const oldProps = current.memoizedProps;//老的属性
   const instance = workInProgress.stateNode;//老的DOM节点
-  debugger
   //比较新老属性，收集属性的差异
-  //const updatePayload = prepareUpdate(instance, type, oldProps, newProps);
-  let updatePayload = ['children', 6]
+  const updatePayload = prepareUpdate(instance, type, oldProps, newProps);
   //让原生组件的新fiber更新队列等于[]
   workInProgress.updateQueue = updatePayload;
+  console.log('updatePayload', updatePayload);
   if (updatePayload) {
     markUpdate(workInProgress);
   }
@@ -88,6 +88,9 @@ export function completeWork(current, workInProgress) {
         workInProgress.stateNode = instance;
         finalizeInitialChildren(instance, type, newProps);
       }
+      bubbleProperties(workInProgress);
+      break;
+    case FunctionComponent:
       bubbleProperties(workInProgress);
       break;
     case HostText:

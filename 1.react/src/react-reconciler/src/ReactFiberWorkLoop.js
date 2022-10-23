@@ -22,7 +22,7 @@ export function scheduleUpdateOnFiber(root) {
 function ensureRootIsScheduled(root) {
   if (workInProgressRoot) return;
   workInProgressRoot = root;
-  //告诉 浏览器要执行performConcurrentWorkOnRoot
+  //告诉 浏览器要执行performConcurrentWorkOnRoot 在此触发更新
   scheduleCallback(performConcurrentWorkOnRoot.bind(null, root));
 }
 /**

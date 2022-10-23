@@ -65,7 +65,6 @@ export function mountIndeterminateComponent(current, workInProgress, Component) 
   return workInProgress.child;
 }
 export function updateFunctionComponent(current, workInProgress, Component, nextProps) {
-  debugger
   const nextChildren = renderWithHooks(current, workInProgress, Component, nextProps);
   reconcileChildren(current, workInProgress, nextChildren);
   return workInProgress.child;
