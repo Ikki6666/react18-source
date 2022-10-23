@@ -30,6 +30,7 @@ function ensureRootIsScheduled(root) {
  * @param {*} root
  */
 function performConcurrentWorkOnRoot(root) {
+  console.log('performConcurrentWorkOnRoot');
   //第一次渲染以同步的方式渲染根节点，初次渲染的时候，都是同步
   renderRootSync(root);
   //开始进入提交 阶段，就是执行副作用，修改真实DOM
@@ -40,6 +41,7 @@ function performConcurrentWorkOnRoot(root) {
 }
 function commitRoot(root) {
   const { finishedWork } = root;
+  console.log(finishedWork);
   printFinishedWork(finishedWork);
   console.log('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~');
   //判断子树有没有副作用
