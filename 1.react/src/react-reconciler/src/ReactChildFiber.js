@@ -1,6 +1,6 @@
 import { REACT_ELEMENT_TYPE } from "shared/ReactSymbols";
 import { createFiberFromElement, createFiberFromText, createWorkInProgress } from "./ReactFiber";
-import { Placement } from "./ReactFiberFlags";
+import { Placement, ChildDeletion } from "./ReactFiberFlags";
 import isArray from "shared/isArray";
 /**
  * @param {*} shouldTrackSideEffects 是否跟踪副作用
@@ -11,6 +11,28 @@ function createChildReconciler(shouldTrackSideEffects) {
     clone.index = 0;
     clone.sibling = null;
     return clone;
+  }
+  function deleteChild(returnFiber, childToDelete) {
+    if (!shouldTrackSideEffects)
+      return;
+    const deletions = returnFiber.deletions;
+    if (deletions === null) {
+      returnFiber.deletions = [childToDelete]
+      returnFiber.flags |= ChildDeletion;
+    } else {
+      returnFiber.deletions.push(childToDelete);
+    }
+  }
+  //删除从currentFirstChild之后所有的fiber节点
+  function deleteRemainingChildren(returnFiber, currentFirstChild) {
+    if (!shouldTrackSideEffects)
+      return;
+    let childToDelete = currentFirstChild;
+    while (childToDelete !== null) {
+      deleteChild(returnFiber, childToDelete);
+      childToDelete = childToDelete.sibling;
+    }
+    return null;
   }
   /**
    * 
@@ -28,11 +50,17 @@ function createChildReconciler(shouldTrackSideEffects) {
       if (child.key === key) {
         //判断老fiber对应的类型和新虚拟DOM元素对应的类型是否相同
         if (child.type === element.type) {// p div
+          deleteRemainingChildren(returnFiber, child.sibling);
           //如果key一样，类型也一样，则认为此节点可以复用
           const existing = useFiber(child, element.props);
           existing.return = returnFiber;
           return existing;
+        } else {
+          //如果找到一key一样老fiber,但是类型不一样，不能此老fiber,把剩下的全部删除
+          deleteRemainingChildren(returnFiber, child);
         }
+      } else {
+        deleteChild(returnFiber, child);
       }
       child = child.sibling;
     }
